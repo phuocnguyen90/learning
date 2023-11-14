@@ -1,28 +1,28 @@
-#include <HTTPClient.h>
-
 #include <WiFi.h>
 #include <WiFiClient.h>
 
 // Replace with your WiFi credentials
-const char* ssid = "67TND";
-const char* password = "0909094005";
+const char* ssid = "";
+const char* password = "";
 
 // ThingSpeak MQTT broker details
-const char* mqttServer = "mqtt.thingspeak.com";
-const char* mqttUsername = "DQcqIgkRAiUfDTUYCh4yLA4";
-const char* mqttPassword = "5ntzi3Pvgo/aqb9YecZi3uCf";
+const char* mqttServer = "";
+const char* mqttUsername = "";
+const char* mqttPassword = "5ntzi3Pvgo/";
 
 // ThingSpeak channel details
-const char* channelID = "2344323";
-const char* apiKey = "IMT17H98LGVWW9QH";
+const char* channelID = "";
+const char* apiKey = "";
 
 // Select the Analog pins to read the sensors
 #define FLAME_SENSOR_PIN 35
 #define GAS_SENSOR_PIN 34
+#define HEAT_SENSOR_PIN 9
 
 // Store the Analog values read from the sensors
 int flameSensorValue;
 int gasSensorValue;
+int heatSensorValue;
 
 // Store the values (%) converted from the corresponding Analog values
 int flamePercent;
@@ -77,6 +77,13 @@ void loop() {
     Serial.print("Gas Detector in %: ");
     Serial.println(gasPercent);
 
+    // Read analog value from the heaet sensor
+    heatSensorValue = analogRead(FLAME_SENSOR_PIN);
+    // Transmit the measured value of the heaet sensor to the computer.
+    Serial.print("Heat sensor value: ");
+    Serial.println(heatSensorValue);
+
+
     // Publish sensor values to ThingSpeak channel
     publishToThingSpeak(flamePercent, gasPercent);
 
@@ -112,7 +119,7 @@ void publishToThingSpeak(int flameValue, int gasValue) {
     
 
     Serial.println("HTTP request sent successfully");
-    delay(5000);
+    delay(4000);
     client.stop();
   } else {
     Serial.println("Failed to connect to ThingSpeak");
