@@ -16,14 +16,19 @@ class Flatten(nn.Module):
 # Helpers
 def batchify_data(x_data, y_data, batch_size):
     """Takes a set of data points and labels and groups them into batches."""
+    x_data = np.array(x_data)
+    y_data = np.array(y_data)
+    
     # Only take batch_size chunks (i.e. drop the remainder)
-    N = int(len(x_data) / batch_size) * batch_size
+    N = (len(x_data) // batch_size) * batch_size
     batches = []
+    
     for i in range(0, N, batch_size):
         batches.append({
             'x': torch.tensor(x_data[i:i+batch_size], dtype=torch.float32),
-            'y': torch.tensor(y_data[i:i+batch_size], dtype=torch.long
-        )})
+            'y': torch.tensor(y_data[i:i+batch_size], dtype=torch.long)
+        })
+        
     return batches
 
 def compute_accuracy(predictions, y):
@@ -87,3 +92,4 @@ def run_epoch(data, model, optimizer):
     avg_loss = np.mean(losses)
     avg_accuracy = np.mean(batch_accuracies)
     return avg_loss, avg_accuracy
+

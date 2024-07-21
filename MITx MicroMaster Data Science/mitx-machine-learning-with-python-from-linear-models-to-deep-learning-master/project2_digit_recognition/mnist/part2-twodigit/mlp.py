@@ -9,7 +9,7 @@ use_mini_dataset = True
 
 batch_size = 64
 nb_classes = 10
-nb_epoch = 30
+nb_epoch = 20
 num_classes = 10
 img_rows, img_cols = 42, 28 # input image dimensions
 
@@ -18,12 +18,22 @@ class MLP(nn.Module):
     def __init__(self, input_dimension):
         super(MLP, self).__init__()
         self.flatten = Flatten()
+        self.fc1 = nn.Linear(input_dimension, 512)
+        self.fc2 = nn.Linear(512, 256)
+        self.fc3_first_digit = nn.Linear(256, num_classes)
+        self.fc3_second_digit = nn.Linear(256, num_classes)
+        self.dropout = nn.Dropout(0.5)
         # TODO initialize model layers here
 
     def forward(self, x):
+        
         xf = self.flatten(x)
-
-        # TODO use model layers to predict the two digits
+        x = F.relu(self.fc1(xf))
+        x = self.dropout(x)
+        x = F.relu(self.fc2(x))
+        x = self.dropout(x)
+        out_first_digit = self.fc3_first_digit(x)
+        out_second_digit = self.fc3_second_digit(x)
 
         return out_first_digit, out_second_digit
 
@@ -50,9 +60,11 @@ def main():
     # Load model
     input_dimension = img_rows * img_cols
     model = MLP(input_dimension) # TODO add proper layers to MLP class above
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+    loss_fn = nn.CrossEntropyLoss()
 
     # Train
-    train_model(train_batches, dev_batches, model)
+    train_model(train_batches, dev_batches, model, optimizer, n_epochs=nb_epoch)
 
     ## Evaluate the model on test data
     loss, acc = run_epoch(test_batches, model.eval(), None)
