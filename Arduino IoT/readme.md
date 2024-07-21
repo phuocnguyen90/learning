@@ -1,1 +1,1 @@
-# Arduino code for getting sensors value and publish to ThingSpeak.com via API 
+# Arduino code for publish sensor values to ThingSpeak.com
