@@ -4,7 +4,6 @@ import numpy as np
 
 
 
-
 def polynomial_kernel(X, Y, c, p):
     """
         Compute the polynomial kernel between two matrices X and Y::
@@ -21,9 +20,7 @@ def polynomial_kernel(X, Y, c, p):
             kernel_matrix - (n, m) Numpy array containing the kernel matrix
     """
     # YOUR CODE HERE
-    K = (X.dot(Y.T) + c)**p
-    
-    return K
+    raise NotImplementedError
 
 
 
@@ -42,14 +39,4 @@ def rbf_kernel(X, Y, gamma):
             kernel_matrix - (n, m) Numpy array containing the kernel matrix
     """
     # YOUR CODE HERE
-    n, d = X.shape
-    m, _ = Y.shape
-    kernel_matrix = np.zeros((n, m))
-
-    for i in range(n):
-        for j in range(m):
-            diff = X[i, :] - Y[j, :]
-            kernel_matrix[i, j] = np.exp(-gamma * np.dot(diff, diff))
-
-    return kernel_matrix
-    
+    raise NotImplementedError

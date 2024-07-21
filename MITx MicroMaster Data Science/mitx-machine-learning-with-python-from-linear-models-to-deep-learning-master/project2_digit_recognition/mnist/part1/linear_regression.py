@@ -16,12 +16,7 @@ def closed_form(X, Y, lambda_factor):
         represents the y-axis intercept of the model and therefore X[0] = 1
     """
     # YOUR CODE HERE
-    n, d = X.shape # number of data points, number of dimensions including offset
-    XT = X.T
-    XTX = X.T.dot(X)
-    theta = np.linalg.inv(XTX + lambda_factor*np.eye(d)).dot(XT).dot(Y)
-    
-    return theta
+    raise NotImplementedError
 
 ### Functions which are already complete, for you to use ###
 

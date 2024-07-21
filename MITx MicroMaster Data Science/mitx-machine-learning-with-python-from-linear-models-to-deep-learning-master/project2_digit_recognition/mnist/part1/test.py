@@ -225,28 +225,29 @@ def check_update_y():
         return
     log(green("PASS"), ex_name, "")
 
-
+###Correction note:  check_project_onto_PC fucntion have been modified since release.
 def check_project_onto_PC():
     ex_name = "Project onto PC"
     X = np.array([
-        [0, 1, 2, 3 ],
-        [1, 2, 3, 4 ],
-        [2, 3, 4, 5 ],
+        [1, 2, 3],
+        [2, 4, 6],
+        [3, 6, 9],
+        [4, 8, 12],
     ]);
-    pcs = features.principal_components(X)
+    x_centered, feature_means = features.center_data(X)
+    pcs = features.principal_components(x_centered)
     exp_res = np.array([
-        [5.61248608, 0],
-        [1.87082869, 0],
-        [-1.87082869, 0],
         [-5.61248608, 0],
+        [-1.87082869, 0],
+        [1.87082869, 0],
+        [5.61248608, 0],
     ])
-    n_components = 3
+    n_components = 2
     if check_array(
             ex_name, features.project_onto_PC,
-            exp_res, X, pcs, n_components):
+            exp_res, X, pcs, n_components, feature_means):
         return
     log(green("PASS"), ex_name, "")
-
 
 def check_polynomial_kernel():
     ex_name = "Polynomial kernel"

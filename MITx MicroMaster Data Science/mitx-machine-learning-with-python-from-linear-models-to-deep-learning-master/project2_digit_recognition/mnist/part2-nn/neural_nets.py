@@ -40,10 +40,10 @@ class NeuralNetwork():
 
     def __init__(self):
 
-        # DO NOT CHANGE PARAMETERS
-        self.input_to_hidden_weights = np.matrix('1 1; 1 1; 1 1')
-        self.hidden_to_output_weights = np.matrix('1 1 1')
-        self.biases = np.matrix('0; 0; 0')
+        # DO NOT CHANGE PARAMETERS (Initialized to floats instead of ints)
+        self.input_to_hidden_weights = np.matrix('1. 1.; 1. 1.; 1. 1.')
+        self.hidden_to_output_weights = np.matrix('1. 1. 1.')
+        self.biases = np.matrix('0.; 0.; 0.')
         self.learning_rate = .001
         self.epochs_to_train = 10
         self.training_points = [((2,1), 10), ((3,3), 21), ((4,5), 32), ((6, 6), 42)]
